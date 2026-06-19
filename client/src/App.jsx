@@ -7,6 +7,7 @@ import Home from "./Pages/Home";
 import AddProduct from "./Pages/AddProduct";
 import EditProduct from "./Pages/EditProduct";
 import ProductDetails from "./Pages/ProductDetails";
+import AdminOrders from "./Pages/AdminOrders";
 
 // Guard Component to check if user is logged in and is the Admin
 const AdminRoute = ({ children }) => {
@@ -14,8 +15,8 @@ const AdminRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+      <div className="spinner-wrapper">
+        <div className="spinner-icon animate-spin"></div>
       </div>
     );
   }
@@ -49,6 +50,14 @@ function App() {
           element={
             <AdminRoute>
               <EditProduct />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <AdminRoute>
+              <AdminOrders />
             </AdminRoute>
           }
         />

@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./Register.css";
 
 function Register() {
   const [name, setName] = useState("");
@@ -63,25 +64,24 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-amber-50 via-stone-100 to-amber-100/50 p-4">
-      <div className="bg-white/80 backdrop-blur-md w-full max-w-md p-8 rounded-2xl shadow-xl border border-amber-100/50 transition-all duration-300 hover:shadow-2xl hover:border-amber-200/50">
-        <div className="text-center mb-8">
-          <span className="text-xs uppercase tracking-widest text-amber-700 font-bold bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <span className="auth-badge">
             Create Membership
           </span>
-          <h1 className="text-3xl font-extrabold text-stone-900 mt-3 font-serif">
+          <h1 className="auth-title">
             Jewellery Shop
           </h1>
-          <p className="text-stone-500 text-sm mt-1">
+          <p className="auth-subtitle">
             Join us for an exclusive, custom luxury experience
           </p>
         </div>
 
         {/* Success Alert */}
         {success && (
-          <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-2 animate-pulse">
+          <div className="alert alert-success animate-pulse">
             <svg
-              className="w-5 h-5 flex-shrink-0 text-emerald-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -93,15 +93,14 @@ function Register() {
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span className="font-medium">{success}</span>
+            <span className="alert-text">{success}</span>
           </div>
         )}
 
         {/* Error Alert */}
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-center gap-2 animate-shake">
+          <div className="alert alert-error animate-shake">
             <svg
-              className="w-5 h-5 flex-shrink-0 text-rose-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -113,13 +112,13 @@ function Register() {
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span className="font-medium">{error}</span>
+            <span className="alert-text">{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block mb-1 text-sm font-semibold text-stone-700">
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label className="form-label">
               Full Name
             </label>
             <input
@@ -128,12 +127,12 @@ function Register() {
               onChange={(e) => setName(e.target.value)}
               placeholder="John Doe"
               disabled={isSubmitting}
-              className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-stone-900 disabled:opacity-50"
+              className="form-input"
             />
           </div>
 
-          <div>
-            <label className="block mb-1 text-sm font-semibold text-stone-700">
+          <div className="form-group">
+            <label className="form-label">
               Email Address
             </label>
             <input
@@ -142,12 +141,12 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@example.com"
               disabled={isSubmitting}
-              className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-stone-900 disabled:opacity-50"
+              className="form-input"
             />
           </div>
 
-          <div>
-            <label className="block mb-1 text-sm font-semibold text-stone-700">
+          <div className="form-group">
+            <label className="form-label">
               Password
             </label>
             <input
@@ -156,12 +155,12 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               disabled={isSubmitting}
-              className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-stone-900 disabled:opacity-50"
+              className="form-input"
             />
           </div>
 
-          <div>
-            <label className="block mb-1 text-sm font-semibold text-stone-700">
+          <div className="form-group">
+            <label className="form-label">
               Confirm Password
             </label>
             <input
@@ -170,21 +169,19 @@ function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
               disabled={isSubmitting}
-              className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-stone-900 disabled:opacity-50"
+              className="form-input"
             />
           </div>
-
-
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full relative flex items-center justify-center bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-amber-500/10 transition-all duration-300 disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
+            className="btn-submit"
           >
             {isSubmitting ? (
-              <span className="flex items-center gap-2">
+              <span className="btn-submit-spinner">
                 <svg
-                  className="animate-spin h-5 w-5 text-white"
+                  className="animate-spin"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -210,11 +207,11 @@ function Register() {
           </button>
         </form>
 
-        <p className="text-center mt-6 text-sm text-stone-500">
+        <p className="auth-redirect">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-amber-700 hover:text-amber-800 font-semibold underline underline-offset-4 decoration-amber-700/30 transition-all"
+            className="auth-redirect-link"
           >
             Login Here
           </Link>

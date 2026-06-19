@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import "./EditProduct.css";
 
 function EditProduct() {
   const { user, loading } = useContext(AuthContext);
@@ -59,10 +60,10 @@ function EditProduct() {
   // If AuthContext is loading user info or fetching product
   if (loading || fetching) {
     return (
-      <div className="min-h-screen bg-stone-50 text-stone-900 flex flex-col font-sans">
+      <div className="dashboard-page">
         <Navbar />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+        <div className="spinner-wrapper" style={{ minHeight: "calc(100vh - 73px)" }}>
+          <div className="spinner-icon animate-spin"></div>
         </div>
       </div>
     );
@@ -71,24 +72,24 @@ function EditProduct() {
   // Guard clause: Only admin@kavithasilver.com has access
   if (!user || user.email !== "admin@kavithasilver.com") {
     return (
-      <div className="min-h-screen bg-stone-50 text-stone-900 flex flex-col font-sans">
+      <div className="dashboard-page">
         <Navbar />
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-rose-100 text-center space-y-6">
-            <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center text-rose-600 mx-auto border border-rose-100">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="denied-wrapper">
+          <div className="denied-card">
+            <div className="denied-icon-box">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold font-serif text-stone-900">Access Denied</h1>
-            <p className="text-stone-600 text-sm">
+            <h1 className="denied-title">Access Denied</h1>
+            <p className="denied-desc">
               You do not have administrative privileges to access this page. Please sign in with the Admin email.
             </p>
-            <div className="flex flex-col gap-3">
-              <Link to="/login" className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition-all text-xs">
+            <div className="denied-actions">
+              <Link to="/login" className="denied-btn-signin">
                 Go to Sign In
               </Link>
-              <Link to="/" className="text-stone-600 hover:text-stone-800 font-semibold py-2 text-xs">
+              <Link to="/" className="denied-btn-home">
                 Back to Homepage
               </Link>
             </div>
@@ -174,62 +175,62 @@ function EditProduct() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-stone-50 via-stone-100 to-stone-50 flex flex-col font-sans">
+    <div className="dashboard-page">
       <Navbar />
 
-      <div className="flex-1 max-w-3xl w-full mx-auto px-6 py-12">
-        <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-amber-100/50">
-          <div className="flex items-center gap-3 border-b border-stone-100 pb-5 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center text-white font-bold shadow-md">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="dashboard-container">
+        <div className="dashboard-card">
+          <div className="dashboard-header">
+            <span className="dashboard-icon-box">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
             </span>
             <div>
-              <h1 className="text-2xl font-extrabold text-stone-900 font-serif">Edit Product</h1>
-              <p className="text-stone-500 text-xs mt-0.5">Modify specifications or manage image catalog for this jewelry piece</p>
+              <h1 className="dashboard-title">Edit Product</h1>
+              <p className="dashboard-subtitle">Modify specifications or manage image catalog for this jewelry piece</p>
             </div>
           </div>
 
           {success && (
-            <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-2 animate-pulse">
-              <svg className="w-5 h-5 flex-shrink-0 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="alert alert-success animate-pulse">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="font-medium">{success}</span>
+              <span>{success}</span>
             </div>
           )}
 
           {error && (
-            <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-center gap-2 animate-shake">
-              <svg className="w-5 h-5 flex-shrink-0 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="alert alert-error animate-shake">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="font-medium">{error}</span>
+              <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block mb-1.5 text-sm font-semibold text-stone-700">Product Name *</label>
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div className="form-grid">
+              <div className="form-group">
+                <label className="form-label">Product Name *</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Sterling Silver Diamond Cut Ring"
                   disabled={isSubmitting}
-                  className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white text-sm"
+                  className="form-input"
                 />
               </div>
 
-              <div>
-                <label className="block mb-1.5 text-sm font-semibold text-stone-700">Category *</label>
+              <div className="form-group">
+                <label className="form-label">Category *</label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   disabled={isSubmitting}
-                  className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white text-sm cursor-pointer"
+                  className="form-select"
                 >
                   <option value="Rings">Rings</option>
                   <option value="Necklaces">Necklaces</option>
@@ -241,77 +242,74 @@ function EditProduct() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block mb-1.5 text-sm font-semibold text-stone-700">Price (INR) *</label>
+            <div className="form-grid">
+              <div className="form-group">
+                <label className="form-label">Price (INR) *</label>
                 <input
                   type="number"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder="e.g. 4999"
                   disabled={isSubmitting}
-                  className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white text-sm"
+                  className="form-input"
                 />
               </div>
 
-              <div>
-                <label className="block mb-1.5 text-sm font-semibold text-stone-700">Product Weight (Optional)</label>
+              <div className="form-group">
+                <label className="form-label">Product Weight (Optional)</label>
                 <input
                   type="text"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   placeholder="e.g. 4.8g or 10.5 grams"
                   disabled={isSubmitting}
-                  className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white text-sm"
+                  className="form-input"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block mb-1.5 text-sm font-semibold text-stone-700">Product Images *</label>
+            <div className="form-group">
+              <label className="form-label">Product Images *</label>
               
-              <div className="flex flex-col gap-4">
+              <div className="uploader-wrapper">
                 <input
                   type="file"
                   multiple
                   accept="image/*"
                   onChange={handleFileChange}
                   disabled={isSubmitting}
-                  className="hidden"
+                  style={{ display: "none" }}
                   id="edit-image-file-upload"
                 />
                 
                 <label
                   htmlFor="edit-image-file-upload"
-                  className={`flex flex-col items-center justify-center border-2 border-dashed border-stone-300 hover:border-amber-600 rounded-2xl p-6 cursor-pointer bg-stone-50/50 hover:bg-amber-50/10 transition-all ${
-                    isSubmitting ? "opacity-50 pointer-events-none" : ""
-                  }`}
+                  className={`uploader-dashed-label ${isSubmitting ? "disabled" : ""}`}
                 >
-                  <svg className="w-8 h-8 text-stone-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="uploader-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                   </svg>
-                  <span className="text-xs font-semibold text-stone-700">Add More Images from Device</span>
-                  <span className="text-[10px] text-stone-400 mt-1">Images can be deleted or updated in the preview layout below.</span>
+                  <span className="uploader-title">Add More Images from Device</span>
+                  <span className="uploader-subtitle">Images can be deleted or updated in the preview layout below.</span>
                 </label>
 
-                {/* Previews */}
                 {images.length > 0 && (
-                  <div className="border border-stone-100 rounded-xl p-4 bg-stone-50/60">
-                    <span className="block text-xs font-bold text-stone-500 uppercase tracking-wider mb-3">Manage Images ({images.length})</span>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div className="previews-container">
+                    <span className="previews-title">Manage Images ({images.length})</span>
+                    <div className="previews-grid">
                       {images.map((imgSrc, idx) => (
-                        <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-stone-200/85 bg-white group shadow-sm">
-                          <img src={imgSrc} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
+                        <div key={idx} className="preview-card">
+                          <img src={imgSrc} alt={`Preview ${idx + 1}`} className="preview-image" />
                           <button
                             type="button"
                             onClick={() => removeImage(idx)}
-                            className="absolute top-1.5 right-1.5 bg-rose-600/90 text-white rounded-full p-1.5 hover:bg-rose-700 transition-all cursor-pointer shadow-md opacity-90 sm:opacity-0 group-hover:opacity-100"
+                            className="preview-delete-btn"
                           >
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                           </button>
-                          <span className="absolute bottom-1 left-1.5 bg-stone-900/60 backdrop-blur-sm text-white text-[8px] px-1.5 py-0.5 rounded font-mono">
+                          <span className="preview-badge">
                             #{idx + 1}
                           </span>
                         </div>
@@ -322,31 +320,31 @@ function EditProduct() {
               </div>
             </div>
 
-            <div>
-              <label className="block mb-1.5 text-sm font-semibold text-stone-700">Product Description *</label>
+            <div className="form-group">
+              <label className="form-label">Product Description *</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe the craftsmanship, materials, weight, and details of this piece..."
                 disabled={isSubmitting}
                 rows="4"
-                className="w-full bg-stone-50/50 border border-stone-200 p-3 rounded-xl outline-none transition-all focus:border-amber-500 focus:bg-white text-sm resize-none"
+                className="form-textarea"
               />
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-100">
+            <div className="form-actions">
               <button
                 type="button"
                 onClick={() => navigate(`/product/${id}`)}
                 disabled={isSubmitting}
-                className="bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold py-3 px-6 rounded-xl transition-all text-sm cursor-pointer disabled:opacity-50"
+                className="btn-cancel"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md hover:shadow-amber-500/10 transition-all text-sm cursor-pointer disabled:opacity-50"
+                className="btn-add-product"
               >
                 {isSubmitting ? "Saving Changes..." : "Save Product"}
               </button>

@@ -1,4 +1,5 @@
 const Product = require("../Model/product");
+const cloudinary = require("../config/cloudinary");
 
 // @desc    Get all products
 // @route   GET /api/products
@@ -46,11 +47,24 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ message: "Price must be a positive number" });
     }
 
+    // Upload base64 images to Cloudinary
+    const uploadedImages = [];
+    for (const img of images) {
+      if (img.startsWith("http")) {
+        uploadedImages.push(img);
+      } else {
+        const uploadRes = await cloudinary.uploader.upload(img, {
+          folder: "products",
+        });
+        uploadedImages.push(uploadRes.secure_url);
+      }
+    }
+
     const product = await Product.create({
       name,
       description,
       price: numericPrice,
-      images,
+      images: uploadedImages,
       category,
       weight: weight || "",
     });
@@ -78,13 +92,28 @@ const updateProduct = async (req, res) => {
     product.name = name !== undefined ? name : product.name;
     product.description = description !== undefined ? description : product.description;
     product.price = price !== undefined ? Number(price) : product.price;
-    product.images = images !== undefined ? images : product.images;
     product.category = category !== undefined ? category : product.category;
     product.weight = weight !== undefined ? weight : product.weight;
 
     // Validate images is not empty if provided
-    if (images !== undefined && (!images || !images.length)) {
-      return res.status(400).json({ message: "Product must have at least one image" });
+    if (images !== undefined) {
+      if (!images || !images.length) {
+        return res.status(400).json({ message: "Product must have at least one image" });
+      }
+
+      // Upload base64 images to Cloudinary, keeping existing http URLs
+      const uploadedImages = [];
+      for (const img of images) {
+        if (img.startsWith("http")) {
+          uploadedImages.push(img);
+        } else {
+          const uploadRes = await cloudinary.uploader.upload(img, {
+            folder: "products",
+          });
+          uploadedImages.push(uploadRes.secure_url);
+        }
+      }
+      product.images = uploadedImages;
     }
 
     const updatedProduct = await product.save();

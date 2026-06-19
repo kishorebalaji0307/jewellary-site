@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import "./Home.css";
 
 function Home() {
   const { user } = useContext(AuthContext);
@@ -48,88 +50,76 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 flex flex-col font-sans relative">
-      {/* Background Image Layer */}
-      {/* <div 
-        className="absolute inset-0 z-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: "url('/silver_bg.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      /> */}
-      
+    <div className="home-page">
       <Navbar />
  
       {/* Hero Section */}
-      <header className="relative py-16 md:py-24 overflow-hidden border-b border-amber-100/40">
-        {/* Background glow effects */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-200/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-stone-200/20 rounded-full blur-3xl" />
+      <header className="hero-section">
+        {/* Background Image Layer */}
+        <div className="hero-bg-image" />
+        {/* Premium dark gradient overlay for text readability */}
+        <div className="hero-overlay" />
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+        {/* Background glow effects */}
+        <div className="hero-glow-1" />
+        <div className="hero-glow-2" />
+
+        <div className="hero-container">
           {/* Left copy column */}
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/40 border border-amber-200/40 text-amber-800 text-xs font-bold tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
-              Est. 2005• Trusted Craftsmanship
+          <div className="hero-left">
+            <div className="hero-badge">
+              <span className="hero-badge-dot animate-pulse" />
+              Est. 2005 • Trusted Craftsmanship
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold text-stone-900 font-serif leading-tight">
+            <h1 className="hero-title">
               Kavitha <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-stone-800">
+              <span className="hero-title-accent">
                 Silver Jewellery
               </span>
             </h1>
 
-            <p className="text-stone-600 text-lg md:text-xl font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="hero-description">
               Kavitha Silver Jewellery is your trusted partner for premium silver
               jewellery, custom gold orders, and expert jewellery repair services.
               We are committed to quality craftsmanship, trusted service, and
               complete customer satisfaction.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Link
-                to="/register"
-                className="w-full sm:w-auto text-center bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-amber-500/10 hover:scale-[1.02] active:scale-95 transition-all text-sm"
-              >
+            <div className="hero-actions">
+              <Link to="/register" className="hero-btn-primary">
                 Join Exclusive Club
               </Link>
-              <a
-                href="#services"
-                className="w-full sm:w-auto text-center border border-stone-300 hover:border-amber-600 text-stone-700 hover:text-amber-800 font-semibold py-4 px-8 rounded-xl hover:bg-amber-50/20 active:scale-95 transition-all text-sm"
-              >
+              <a href="#services" className="hero-btn-secondary">
                 View Services
               </a>
             </div>
 
             {/* Micro stats banner */}
-            <div className="pt-6 grid grid-cols-3 gap-4 border-t border-stone-200/60 max-w-md mx-auto lg:mx-0">
+            <div className="hero-stats">
               <div>
-                <p className="text-2xl font-bold font-serif text-stone-900">20+</p>
-                <p className="text-xs text-stone-500 font-medium">Years Active</p>
+                <p className="hero-stat-number">20+</p>
+                <p className="hero-stat-label">Years Active</p>
               </div>
               <div>
-                <p className="text-2xl font-bold font-serif text-stone-900">10k+</p>
-                <p className="text-xs text-stone-500 font-medium">Happy Clients</p>
+                <p className="hero-stat-number">10k+</p>
+                <p className="hero-stat-label">Happy Clients</p>
               </div>
               <div>
-                <p className="text-2xl font-bold font-serif text-stone-900">100%</p>
-                <p className="text-xs text-stone-500 font-medium">Certified Quality</p>
+                <p className="hero-stat-number">100%</p>
+                <p className="hero-stat-label">Certified Quality</p>
               </div>
             </div>
           </div>
 
           {/* Right image column */}
-          <div className="lg:col-span-5 relative">
-            <div className="absolute -inset-1 bg-gradient-to-tr from-amber-500 to-stone-400 rounded-3xl blur opacity-30 animate-pulse" />
-            <div className="relative bg-white p-3 rounded-3xl shadow-2xl border border-stone-100">
+          <div className="hero-right">
+            <div className="hero-right-pulse-bg animate-pulse" />
+            <div className="hero-image-wrapper">
               <img
                 src="/jewellery_hero.png"
                 alt="Fine Jewellery Selection"
-                className="w-full h-[400px] object-cover rounded-2xl"
+                className="hero-image"
               />
             </div>
           </div>
@@ -137,26 +127,25 @@ function Home() {
       </header>
 
       {/* Services Showcase */}
-      <section id="services" className="py-20 bg-stone-100/50">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center max-w-xl mx-auto mb-16 space-y-3">
-            <span className="text-xs uppercase tracking-widest text-amber-700 font-bold">
+      <section id="services" className="services-section">
+        <div className="services-container">
+          <div className="services-header">
+            <span className="services-subtitle">
               Our Specialties
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-stone-900">
+            <h2 className="services-title">
               Unrivaled Design and Care
             </h2>
-            <p className="text-stone-500 text-sm">
+            <p className="services-header-text">
               Discover the full suite of bespoke services we provide at our exclusive salon.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="services-grid">
             {/* Service 1 */}
-            <div className="bg-white p-8 rounded-2xl border border-amber-100/30 shadow-md transition-all duration-300 hover:shadow-xl hover:border-amber-500/20 group">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-700 font-bold mb-6 group-hover:bg-amber-600 group-hover:text-white transition-all">
+            <div className="service-card">
+              <div className="service-icon-wrapper">
                 <svg
-                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -169,20 +158,19 @@ function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-stone-900 font-serif mb-3">
+              <h3 className="service-card-title">
                 Premium Silver
               </h3>
-              <p className="text-stone-600 text-sm leading-relaxed">
+              <p className="service-card-desc">
                 Explore our luxurious collection of solid sterling silver jewellery, including
                 hand-carved necklaces, custom statement rings, and delicate bangles.
               </p>
             </div>
 
             {/* Service 2 */}
-            <div className="bg-white p-8 rounded-2xl border border-amber-100/30 shadow-md transition-all duration-300 hover:shadow-xl hover:border-amber-500/20 group">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-700 font-bold mb-6 group-hover:bg-amber-600 group-hover:text-white transition-all">
+            <div className="service-card">
+              <div className="service-icon-wrapper">
                 <svg
-                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -195,20 +183,19 @@ function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-stone-900 font-serif mb-3">
+              <h3 className="service-card-title">
                 Custom Gold Orders
               </h3>
-              <p className="text-stone-600 text-sm leading-relaxed">
+              <p className="service-card-desc">
                 Work directly with our master designers to craft custom solid gold pieces. From 
                 initial sketch to final polish, we realize your dream creations.
               </p>
             </div>
 
             {/* Service 3 */}
-            <div className="bg-white p-8 rounded-2xl border border-amber-100/30 shadow-md transition-all duration-300 hover:shadow-xl hover:border-amber-500/20 group">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-700 font-bold mb-6 group-hover:bg-amber-600 group-hover:text-white transition-all">
+            <div className="service-card">
+              <div className="service-icon-wrapper">
                 <svg
-                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -227,10 +214,10 @@ function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-stone-900 font-serif mb-3">
+              <h3 className="service-card-title">
                 Expert Repair Services
               </h3>
-              <p className="text-stone-600 text-sm leading-relaxed">
+              <p className="service-card-desc">
                 Restore structural integrity, replace lost settings, and resize precious heirlooms 
                 with our delicate, high-precision repair and restoration services.
               </p>
@@ -240,57 +227,57 @@ function Home() {
       </section>
 
       {/* Product Collection Section */}
-      <section id="collection" className="py-20 bg-stone-50">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center max-w-xl mx-auto mb-16 space-y-3">
-            <span className="text-xs uppercase tracking-widest text-amber-700 font-bold bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+      <section id="collection" className="catalog-section">
+        <div className="catalog-container">
+          <div className="catalog-header">
+            <span className="catalog-badge">
               Signature Collection
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-stone-900">
+            <h2 className="catalog-title">
               Explore Our Exquisite Catalog
             </h2>
-            <p className="text-stone-500 text-sm">
+            <p className="catalog-desc">
               Indulge in our beautifully crafted premium silver and gold masterpieces.
             </p>
           </div>
 
           {productsLoading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-amber-600"></div>
+            <div className="catalog-loading">
+              <div className="catalog-loading-spinner animate-spin"></div>
             </div>
           ) : products.length === 0 ? (
-            <div className="text-center py-16 bg-white rounded-2xl border border-stone-200/60 max-w-lg mx-auto shadow-sm animate-fade-in">
-              <svg className="w-12 h-12 text-stone-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="catalog-empty animate-fade-in">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
-              <h3 className="text-lg font-bold text-stone-800 font-serif">No Products Yet</h3>
-              <p className="text-stone-500 text-xs mt-1 px-4">Our artisans are busy crafting new premium designs. Please check back soon or contact us for custom orders.</p>
+              <h3 className="catalog-empty-title">No Products Yet</h3>
+              <p className="catalog-empty-desc">Our artisans are busy crafting new premium designs. Please check back soon or contact us for custom orders.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="catalog-grid">
               {products.map((product) => (
-                <div key={product._id} className="bg-white rounded-2xl overflow-hidden border border-stone-200/65 shadow-sm hover:shadow-xl hover:border-amber-500/20 transition-all duration-300 flex flex-col group relative">
+                <div key={product._id} className="product-card">
                   
-                  <Link to={`/product/${product._id}`} className="relative overflow-hidden aspect-square bg-stone-100 block">
+                  <Link to={`/product/${product._id}`} className="product-image-link">
                     <img
                       src={product.images && product.images.length > 0 ? product.images[0] : "/jewellery_hero.png"}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                      className="product-image"
                     />
-                    <span className="absolute top-3 right-3 bg-stone-900/80 backdrop-blur-md text-amber-400 text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border border-amber-500/20">
+                    <span className="product-badge">
                       {product.category}
                     </span>
 
                     {/* Quick Admin Actions directly on card */}
                     {user && user.email === "admin@kavithasilver.com" && (
-                      <div className="absolute top-3 left-3 flex gap-2 z-10" onClick={(e) => e.stopPropagation()}>
+                      <div className="product-admin-actions" onClick={(e) => e.stopPropagation()}>
                         <Link
                           to={`/edit-product/${product._id}`}
-                          className="w-7 h-7 rounded-lg bg-stone-900/85 backdrop-blur-md border border-stone-700/40 flex items-center justify-center text-white hover:bg-amber-600 hover:text-white transition-all shadow"
+                          className="product-admin-btn-edit"
                           title="Edit Product"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
                         </Link>
@@ -302,10 +289,10 @@ function Home() {
                               deleteProductFromHome(product._id);
                             }
                           }}
-                          className="w-7 h-7 rounded-lg bg-rose-650/95 backdrop-blur-md border border-rose-800 flex items-center justify-center text-white hover:bg-rose-700 transition-all cursor-pointer shadow"
+                          className="product-admin-btn-delete"
                           title="Delete Product"
                         >
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                         </button>
@@ -313,20 +300,20 @@ function Home() {
                     )}
                   </Link>
 
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                    <Link to={`/product/${product._id}`} className="space-y-2 block hover:opacity-85 transition-opacity">
-                      <h3 className="text-base font-bold text-stone-900 group-hover:text-amber-800 transition-colors line-clamp-1 font-serif">
+                  <div className="product-card-body">
+                    <Link to={`/product/${product._id}`} className="product-card-info">
+                      <h3 className="product-card-title">
                         {product.name}
                       </h3>
-                      <p className="text-stone-500 text-xs line-clamp-2 leading-relaxed">
+                      <p className="product-card-desc">
                         {product.description}
                       </p>
                     </Link>
-                    <div className="flex items-center justify-between pt-3 border-t border-stone-100">
-                      <span className="text-base font-bold text-amber-800 font-serif">
+                    <div className="product-card-footer">
+                      <span className="product-card-price">
                         ₹{product.price.toLocaleString("en-IN")}
                       </span>
-                      <Link to={`/product/${product._id}`} className="text-[11px] font-bold text-stone-800 bg-stone-50 hover:bg-amber-600 hover:text-white px-3.5 py-1.5 rounded-lg border border-stone-200 hover:border-amber-600 transition-all cursor-pointer">
+                      <Link to={`/product/${product._id}`} className="product-card-btn-view">
                         View Details
                       </Link>
                     </div>
@@ -339,52 +326,37 @@ function Home() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 text-center space-y-8">
-          <span className="text-xs uppercase tracking-widest text-amber-700 font-bold bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+      <section className="values-section">
+        <div className="values-container">
+          <span className="values-badge">
             Our Core Values
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold font-serif text-stone-900">
+          <h2 className="values-title">
             Commitment to Perfection
           </h2>
-          <p className="text-stone-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
+          <p className="values-desc">
             At Kavitha Silver Jewellery, every step of our process reflects our devotion to quality. 
             From sourcing conflict-free precious metals to providing individual client attention, 
             we strive to create an experience as refined as the products we craft.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
-            <div className="p-4 border-r border-stone-200 last:border-0">
-              <h4 className="text-amber-800 font-serif font-bold text-lg mb-1">Quality Craftsmanship</h4>
-              <p className="text-xs text-stone-500">Meticulous details and hand-finished brilliance in every design.</p>
+          <div className="values-grid">
+            <div className="value-item">
+              <h4 className="value-item-title">Quality Craftsmanship</h4>
+              <p className="value-item-desc">Meticulous details and hand-finished brilliance in every design.</p>
             </div>
-            <div className="p-4 border-r border-stone-200 last:border-0">
-              <h4 className="text-amber-800 font-serif font-bold text-lg mb-1">Trusted Service</h4>
-              <p className="text-xs text-stone-500">Decades of gold-standard reliability, certificates, and valuations.</p>
+            <div className="value-item">
+              <h4 className="value-item-title">Trusted Service</h4>
+              <p className="value-item-desc">Decades of gold-standard reliability, certificates, and valuations.</p>
             </div>
-            <div className="p-4">
-              <h4 className="text-amber-800 font-serif font-bold text-lg mb-1">Complete Satisfaction</h4>
-              <p className="text-xs text-stone-500">Dedicated care, resizing services, and lifetime warranty assurance.</p>
+            <div className="value-item">
+              <h4 className="value-item-title">Complete Satisfaction</h4>
+              <p className="value-item-desc">Dedicated care, resizing services, and lifetime warranty assurance.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Elegant Footer */}
-      <footer className="mt-auto bg-stone-900 text-stone-400 py-10 border-t border-stone-800 text-xs">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-3">
-            <img
-              src="C:\Users\Danush Kumar N K\Downloads\KAVITHA LOGO-2_page-0001.jpg"
-              alt="Kavitha Silver Jewellery Logo"
-              className="w-8 h-8 rounded-full object-cover border border-stone-700"
-            />
-            <span className="text-stone-200 font-serif font-semibold text-sm">
-              Kavitha Silver Jewellery
-            </span>
-          </div>
-          <p>© {new Date().getFullYear()} Kavitha Silver Jewellery. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

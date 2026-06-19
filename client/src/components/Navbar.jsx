@@ -1,77 +1,71 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./Navbar.css";
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-amber-100/40 px-6 md:px-12 py-4 flex justify-between items-center shadow-sm">
-      <div className="flex items-center gap-2">
+    <nav className="navbar">
+      <div className="navbar-brand">
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" className="navbar-brand-link">
           <img
-            src="C:\Users\Danush Kumar N K\Downloads\KAVITHA LOGO-2_page-0001.jpg"
+            src="C:/Users/Danush Kumar N K/Downloads/KAVITHA LOGO-2_page-0001.jpg"
             alt="Kavitha Silver Jewellery Logo"
-            className="w-10 h-10 rounded-full object-cover shadow-md group-hover:scale-105 transition-all duration-300 border border-amber-100/10"
+            className="navbar-logo"
           />
-          <h1 className="text-2xl font-extrabold text-stone-900 font-serif tracking-tight group-hover:text-amber-800 transition-colors">
-            Kavitha Jewellary<span className="text-amber-600 font-sans">.</span>
+          <h1 className="navbar-title">
+            Kavitha Jewellary<span>.</span>
           </h1>
         </Link>
       </div>
 
-      <div className="flex items-center gap-6 font-semibold text-stone-600 text-sm">
-        <Link
-          to="/"
-          className="hover:text-amber-700 transition-colors py-1.5 px-3 rounded-lg hover:bg-stone-50"
-        >
+      <div className="navbar-menu">
+        <Link to="/" className="navbar-link">
           Home
         </Link>
 
         {user && user.email === "admin@kavithasilver.com" && (
-          <Link
-            to="/add-product"
-            className="text-amber-700 hover:text-amber-800 transition-colors py-1.5 px-3 rounded-lg bg-amber-50 hover:bg-amber-100/70 border border-amber-200/40 flex items-center gap-1 font-bold"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
-            </svg>
-            Add Product
-          </Link>
+          <>
+            <Link to="/add-product" className="navbar-link-admin">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+              </svg>
+              Add Product
+            </Link>
+            <Link to="/admin/orders" className="navbar-link-admin">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+              View Orders
+            </Link>
+          </>
         )}
 
         {user ? (
-          <div className="flex items-center gap-4 border-l border-stone-200 pl-4">
-            <div className="flex items-center gap-2">
+          <div className="navbar-user-section">
+            <div className="navbar-user-profile">
               {/* User Avatar Circle */}
-              <div className="w-8 h-8 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-800 font-bold uppercase text-xs">
+              <div className="navbar-avatar">
                 {user.name.charAt(0)}
               </div>
-              <span className="text-stone-800 hidden sm:inline text-xs font-medium">
-                Hello, <strong className="font-semibold text-stone-900">{user.name}</strong>
+              <span className="navbar-hello-user">
+                Hello, <strong>{user.name}</strong>
               </span>
             </div>
 
-            <button
-              onClick={logout}
-              className="bg-stone-900 hover:bg-stone-800 text-white py-2 px-4 rounded-xl shadow-md transition-all text-xs font-bold cursor-pointer"
-            >
+            <button onClick={logout} className="navbar-btn-signout">
               Sign Out
             </button>
           </div>
         ) : (
-          <div className="flex items-center gap-3 border-l border-stone-200 pl-4">
-            <Link
-              to="/login"
-              className="text-stone-700 hover:text-amber-700 py-2 px-3 rounded-xl transition-all text-xs font-bold"
-            >
+          <div className="navbar-user-section">
+            <Link to="/login" className="navbar-link-signin">
               Sign In
             </Link>
-            <Link
-              to="/register"
-              className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white py-2.5 px-4.5 rounded-xl shadow-md hover:shadow-amber-500/10 transition-all text-xs font-bold"
-            >
+            <Link to="/register" className="navbar-btn-register">
               Register
             </Link>
           </div>
