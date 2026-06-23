@@ -8,6 +8,8 @@ import AddProduct from "./Pages/AddProduct";
 import EditProduct from "./Pages/EditProduct";
 import ProductDetails from "./Pages/ProductDetails";
 import AdminOrders from "./Pages/AdminOrders";
+import Booking from "./Pages/Booking";
+import AdminBookings from "./Pages/AdminBookings";
 
 // Guard Component to check if user is logged in and is the Admin
 const AdminRoute = ({ children }) => {
@@ -37,6 +39,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/booking" element={<Booking />} />
         <Route
           path="/add-product"
           element={
@@ -58,6 +61,14 @@ function App() {
           element={
             <AdminRoute>
               <AdminOrders />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/bookings"
+          element={
+            <AdminRoute>
+              <AdminBookings />
             </AdminRoute>
           }
         />

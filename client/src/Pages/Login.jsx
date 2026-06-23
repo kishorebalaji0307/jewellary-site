@@ -98,7 +98,7 @@ function Login() {
         
         <div className="auth-header">
           <img
-            src="/logo.png"
+            src="/logo.jpg"
             alt="Kavitha Silver Jewellery Logo"
             className="auth-logo"
           />

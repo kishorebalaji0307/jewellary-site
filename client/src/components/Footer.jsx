@@ -6,7 +6,7 @@ function Footer() {
       <div className="footer-container">
         <div className="footer-brand">
           <img
-            src="/logo.png"
+            src="/logo.jpg"
             alt="Kavitha Silver Jewellery Logo"
             className="footer-logo"
           />

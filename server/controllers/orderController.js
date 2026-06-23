@@ -1,5 +1,6 @@
 const Order = require("../Model/order");
 const Product = require("../Model/product");
+const { sendOrderEmails } = require("../config/nodemailer");
 
 // @desc    Create a new order request
 // @route   POST /api/orders
@@ -44,6 +45,11 @@ const createOrder = async (req, res) => {
       productCategory: product.category,
     });
 
+    // Send email notification asynchronously (non-blocking for HTTP response)
+    sendOrderEmails(order).catch((err) => {
+      console.error("Non-blocking order email sending error:", err.message);
+    });
+
     res.status(201).json(order);
   } catch (error) {
     console.error("CreateOrder Error:", error.message);
@@ -68,3 +74,4 @@ module.exports = {
   createOrder,
   getOrders,
 };
+

@@ -67,6 +67,11 @@ function Register() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
+          <img
+            src="/logo.jpg"
+            alt="Kavitha Silver Jewellery Logo"
+            className="auth-logo"
+          />
           <span className="auth-badge">
             Create Membership
           </span>

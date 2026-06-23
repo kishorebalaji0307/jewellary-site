@@ -9,6 +9,30 @@ function Home() {
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(true);
+  const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0);
+
+  const showcaseItems = [
+    {
+      url: "/custom_showcase_3.png",
+      title: "Royal Kundan Antique Necklace",
+      type: "Custom Gold Necklace"
+    },
+    {
+      url: "/custom_showcase_1.png",
+      title: "Handcrafted Diamond Cut Couple Rings",
+      type: "Custom Gold Rings"
+    },
+    {
+      url: "/custom_showcase_2.png",
+      title: "Intricate Filigree Artisan Bracelets",
+      type: "Custom Gold Bracelets"
+    },
+    {
+      url: "/custom_showcase_4.png",
+      title: "Exquisite Signature S-Link Chain",
+      type: "Custom Gold Chain"
+    }
+  ];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -87,9 +111,11 @@ function Home() {
             </p>
 
             <div className="hero-actions">
-              <Link to="/register" className="hero-btn-primary">
-                Join Exclusive Club
-              </Link>
+              {!user && (
+                <Link to="/register" className="hero-btn-primary">
+                  Join Exclusive Club
+                </Link>
+              )}
               <a href="#services" className="hero-btn-secondary">
                 View Services
               </a>
@@ -322,6 +348,71 @@ function Home() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Custom Showcase Section */}
+      <section className="showcase-section">
+        <div className="showcase-bg-glow" />
+        <div className="showcase-bg-texture" />
+
+        <div className="showcase-container">
+          <div className="showcase-grid-layout">
+            
+            {/* Left Content Column */}
+            <div className="showcase-content">
+              <div className="showcase-badge">Bespoke Creations</div>
+              <h2 className="showcase-title">Where Tradition Meets Craftsmanship</h2>
+              <p className="showcase-desc">
+                Designed exclusively for our customer, this handcrafted jewelry piece embodies the beauty of traditional artistry and refined elegance. Carefully crafted by our skilled artisans, it stands as a testament to our dedication to quality, heritage, and personalized design.
+              </p>
+              
+              {/* Image Selectors / Thumbnails */}
+              <div className="showcase-selector-group">
+                <span className="showcase-selector-label">Select Custom Masterpiece:</span>
+                <div className="showcase-thumbnails">
+                  {showcaseItems.map((item, idx) => (
+                    <button
+                      key={idx}
+                      className={`showcase-thumb-btn ${activeShowcaseIndex === idx ? 'active' : ''}`}
+                      onClick={() => setActiveShowcaseIndex(idx)}
+                      title={item.title}
+                    >
+                      <img src={item.url} alt={item.title} />
+                      <div className="showcase-thumb-overlay" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Active creation details */}
+              <div className="showcase-details">
+                <span className="showcase-details-type">{showcaseItems[activeShowcaseIndex].type}</span>
+                <h4 className="showcase-details-title">{showcaseItems[activeShowcaseIndex].title}</h4>
+              </div>
+            </div>
+
+            {/* Right Image Showcase Column */}
+            <div className="showcase-viewer">
+              <div className="showcase-frame">
+                <div className="showcase-corner showcase-corner-tl" />
+                <div className="showcase-corner showcase-corner-tr" />
+                <div className="showcase-corner showcase-corner-bl" />
+                <div className="showcase-corner showcase-corner-br" />
+                
+                <div className="showcase-img-container">
+                  <img
+                    src={showcaseItems[activeShowcaseIndex].url}
+                    alt={showcaseItems[activeShowcaseIndex].title}
+                    key={activeShowcaseIndex}
+                    className="showcase-active-img"
+                  />
+                  <div className="showcase-img-reflection" />
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
