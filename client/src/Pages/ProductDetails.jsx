@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import "./ProductDetails.css";
 
@@ -8,6 +9,7 @@ function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const { showToast } = useToast();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,8 +23,6 @@ function ProductDetails() {
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
-  const [modalError, setModalError] = useState("");
-  const [modalSuccess, setModalSuccess] = useState("");
   const [modalSubmitting, setModalSubmitting] = useState(false);
 
   // Prefill details if user is logged in
@@ -35,23 +35,21 @@ function ProductDetails() {
 
   const handleOrderSubmit = async (e) => {
     e.preventDefault();
-    setModalError("");
-    setModalSuccess("");
 
     if (!customerName.trim() || !customerEmail.trim() || !customerPhone.trim()) {
-      setModalError("Please fill in all fields.");
+      showToast("Please fill in all fields.", "error");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(customerEmail)) {
-      setModalError("Please enter a valid email address.");
+      showToast("Please enter a valid email address.", "error");
       return;
     }
 
     const phoneRegex = /^\+?[\d\s\-()]{10,}$/;
     if (!phoneRegex.test(customerPhone)) {
-      setModalError("Please enter a valid phone number (minimum 10 digits).");
+      showToast("Please enter a valid phone number (minimum 10 digits).", "error");
       return;
     }
 
@@ -74,18 +72,17 @@ function ProductDetails() {
       const data = await res.json();
 
       if (res.ok) {
-        setModalSuccess("Order Request placed successfully!");
+        showToast("Order Request placed successfully!", "success");
         setCustomerPhone("");
         setTimeout(() => {
           setShowOrderModal(false);
-          setModalSuccess("");
         }, 1500);
       } else {
-        setModalError(data.message || "Failed to submit order request.");
+        showToast(data.message || "Failed to submit order request.", "error");
       }
     } catch (err) {
       console.error(err);
-      setModalError("Network error. Please try again.");
+      showToast("Network error. Please try again.", "error");
     } finally {
       setModalSubmitting(false);
     }
@@ -124,16 +121,17 @@ function ProductDetails() {
       });
 
       if (res.ok) {
+        showToast("Product deleted successfully", "success");
         navigate("/");
       } else {
         const data = await res.json();
-        setError(data.message || "Failed to delete product");
+        showToast(data.message || "Failed to delete product", "error");
         setIsDeleting(false);
         setDeleteConfirm(false);
       }
     } catch (err) {
       console.error(err);
-      setError("Network error occurred during delete.");
+      showToast("Network error occurred during delete.", "error");
       setIsDeleting(false);
       setDeleteConfirm(false);
     }
@@ -315,25 +313,6 @@ function ProductDetails() {
                 </svg>
               </button>
             </div>
-
-            {modalSuccess && (
-              <div className="alert alert-success animate-pulse" style={{ marginBottom: "1rem" }}>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>{modalSuccess}</span>
-              </div>
-            )}
-
-            {modalError && (
-              <div className="alert alert-error animate-shake" style={{ marginBottom: "1rem" }}>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>{modalError}</span>
-              </div>
-            )}
-
             <form onSubmit={handleOrderSubmit} className="modal-form">
               <div className="form-group">
                 <label className="form-label">Full Name *</label>

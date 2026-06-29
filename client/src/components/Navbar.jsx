@@ -29,6 +29,9 @@ function Navbar() {
         <Link to="/booking" className="navbar-link">
           Booking
         </Link>
+        <Link to="/about" className="navbar-link">
+          About Us
+        </Link>
 
         {user && user.email === "admin@kavithasilver.com" && (
           <>

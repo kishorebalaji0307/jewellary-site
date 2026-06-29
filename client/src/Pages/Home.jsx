@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Home.css";
 
 function Home() {
   const { user } = useContext(AuthContext);
+  const { showToast } = useToast();
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(true);
   const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0);
@@ -31,6 +33,11 @@ function Home() {
       url: "/custom_showcase_4.png",
       title: "Exquisite Signature S-Link Chain",
       type: "Custom Gold Chain"
+    },
+    {
+      url: "/custom_showcase_5.png",
+      title: "Royal Ruby-Studded Gold Bangles",
+      type: "Custom Gold Bangles"
     }
   ];
 
@@ -63,13 +70,14 @@ function Home() {
 
       if (res.ok) {
         setProducts((prev) => prev.filter((p) => p._id !== id));
+        showToast("Product deleted successfully", "success");
       } else {
         const data = await res.json();
-        alert(data.message || "Failed to delete product");
+        showToast(data.message || "Failed to delete product", "error");
       }
     } catch (err) {
       console.error(err);
-      alert("Error deleting product");
+      showToast("Error deleting product", "error");
     }
   };
 
@@ -87,6 +95,13 @@ function Home() {
         {/* Background glow effects */}
         <div className="hero-glow-1" />
         <div className="hero-glow-2" />
+
+        {/* Floating luxury particles */}
+        <div className="hero-particle hero-particle-1" />
+        <div className="hero-particle hero-particle-2" />
+        <div className="hero-particle hero-particle-3" />
+        <div className="hero-particle hero-particle-4" />
+        <div className="hero-particle hero-particle-5" />
 
         <div className="hero-container">
           {/* Left copy column */}
@@ -147,21 +162,30 @@ function Home() {
                 alt="Fine Jewellery Selection"
                 className="hero-image"
               />
+              {/* Premium reflection overlay */}
+              <div className="hero-image-shine" />
             </div>
           </div>
         </div>
+
+        {/* Decorative bottom wave */}
+        <div className="hero-bottom-ornament" />
       </header>
 
       {/* Services Showcase */}
       <section id="services" className="services-section">
+        {/* Section ornament */}
+        <div className="section-glow services-glow" />
+
         <div className="services-container">
-          <div className="services-header">
+          <div className="services-header scroll-reveal">
             <span className="services-subtitle">
               Our Specialties
             </span>
             <h2 className="services-title">
               Unrivaled Design and Care
             </h2>
+            <div className="section-ornament-line" />
             <p className="services-header-text">
               Discover the full suite of bespoke services we provide at our exclusive salon.
             </p>
@@ -169,7 +193,7 @@ function Home() {
 
           <div className="services-grid">
             {/* Service 1 */}
-            <div className="service-card">
+            <div className="service-card gradient-border-card scroll-reveal">
               <div className="service-icon-wrapper">
                 <svg
                   fill="none"
@@ -194,7 +218,7 @@ function Home() {
             </div>
 
             {/* Service 2 */}
-            <div className="service-card">
+            <div className="service-card gradient-border-card scroll-reveal">
               <div className="service-icon-wrapper">
                 <svg
                   fill="none"
@@ -219,7 +243,7 @@ function Home() {
             </div>
 
             {/* Service 3 */}
-            <div className="service-card">
+            <div className="service-card gradient-border-card scroll-reveal">
               <div className="service-icon-wrapper">
                 <svg
                   fill="none"
@@ -255,13 +279,14 @@ function Home() {
       {/* Product Collection Section */}
       <section id="collection" className="catalog-section">
         <div className="catalog-container">
-          <div className="catalog-header">
+          <div className="catalog-header scroll-reveal">
             <span className="catalog-badge">
               Signature Collection
             </span>
             <h2 className="catalog-title">
               Explore Our Exquisite Catalog
             </h2>
+            <div className="section-ornament-line" />
             <p className="catalog-desc">
               Indulge in our beautifully crafted premium silver and gold masterpieces.
             </p>
@@ -282,17 +307,19 @@ function Home() {
           ) : (
             <div className="catalog-grid">
               {products.map((product) => (
-                <div key={product._id} className="product-card">
+                <div key={product._id} className="product-card gradient-border-card scroll-reveal">
                   
-                  <Link to={`/product/${product._id}`} className="product-image-link">
-                    <img
-                      src={product.images && product.images.length > 0 ? product.images[0] : "/jewellery_hero.png"}
-                      alt={product.name}
-                      className="product-image"
-                    />
-                    <span className="product-badge">
-                      {product.category}
-                    </span>
+                  <div className="product-image-container">
+                    <Link to={`/product/${product._id}`} className="product-image-link">
+                      <img
+                        src={product.images && product.images.length > 0 ? product.images[0] : "/jewellery_hero.png"}
+                        alt={product.name}
+                        className="product-image"
+                      />
+                      <span className="product-badge">
+                        {product.category}
+                      </span>
+                    </Link>
 
                     {/* Quick Admin Actions directly on card */}
                     {user && user.email === "admin@kavithasilver.com" && (
@@ -324,7 +351,7 @@ function Home() {
                         </button>
                       </div>
                     )}
-                  </Link>
+                  </div>
 
                   <div className="product-card-body">
                     <Link to={`/product/${product._id}`} className="product-card-info">
@@ -360,7 +387,7 @@ function Home() {
           <div className="showcase-grid-layout">
             
             {/* Left Content Column */}
-            <div className="showcase-content">
+            <div className="showcase-content scroll-reveal-left">
               <div className="showcase-badge">Bespoke Creations</div>
               <h2 className="showcase-title">Where Tradition Meets Craftsmanship</h2>
               <p className="showcase-desc">
@@ -393,13 +420,17 @@ function Home() {
             </div>
 
             {/* Right Image Showcase Column */}
-            <div className="showcase-viewer">
+            <div className="showcase-viewer scroll-reveal-right">
               <div className="showcase-frame">
+                {/* Decorative corner ornaments */}
                 <div className="showcase-corner showcase-corner-tl" />
                 <div className="showcase-corner showcase-corner-tr" />
                 <div className="showcase-corner showcase-corner-bl" />
                 <div className="showcase-corner showcase-corner-br" />
                 
+                {/* Premium glow behind image */}
+                <div className="showcase-image-glow" />
+
                 <div className="showcase-img-container">
                   <img
                     src={showcaseItems[activeShowcaseIndex].url}
@@ -419,27 +450,31 @@ function Home() {
       {/* Philosophy Section */}
       <section className="values-section">
         <div className="values-container">
-          <span className="values-badge">
+          <span className="values-badge scroll-reveal">
             Our Core Values
           </span>
-          <h2 className="values-title">
+          <h2 className="values-title scroll-reveal">
             Commitment to Perfection
           </h2>
-          <p className="values-desc">
+          <div className="section-ornament-line scroll-reveal" />
+          <p className="values-desc scroll-reveal">
             At Kavitha Silver Jewellery, every step of our process reflects our devotion to quality. 
             From sourcing conflict-free precious metals to providing individual client attention, 
             we strive to create an experience as refined as the products we craft.
           </p>
           <div className="values-grid">
-            <div className="value-item">
+            <div className="value-item gradient-border-card scroll-reveal">
+              <div className="value-icon">✦</div>
               <h4 className="value-item-title">Quality Craftsmanship</h4>
               <p className="value-item-desc">Meticulous details and hand-finished brilliance in every design.</p>
             </div>
-            <div className="value-item">
+            <div className="value-item gradient-border-card scroll-reveal">
+              <div className="value-icon">✦</div>
               <h4 className="value-item-title">Trusted Service</h4>
               <p className="value-item-desc">Decades of gold-standard reliability, certificates, and valuations.</p>
             </div>
-            <div className="value-item">
+            <div className="value-item gradient-border-card scroll-reveal">
+              <div className="value-icon">✦</div>
               <h4 className="value-item-title">Complete Satisfaction</h4>
               <p className="value-item-desc">Dedicated care, resizing services, and lifetime warranty assurance.</p>
             </div>

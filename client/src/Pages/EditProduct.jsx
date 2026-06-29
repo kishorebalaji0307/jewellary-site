@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import "./EditProduct.css";
 
 function EditProduct() {
   const { user, loading } = useContext(AuthContext);
   const { id } = useParams();
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -17,8 +19,6 @@ function EditProduct() {
   const [description, setDescription] = useState("");
   
   const [fetching, setFetching] = useState(true);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Check auth and fetch product on mount
@@ -44,11 +44,11 @@ function EditProduct() {
           setImages(data.images || []);
           setDescription(data.description);
         } else {
-          setError(data.message || "Failed to load product details");
+          showToast(data.message || "Failed to load product details", "error");
         }
       } catch (err) {
         console.error(err);
-        setError("Error loading product details");
+        showToast("Error loading product details", "error");
       } finally {
         setFetching(false);
       }
@@ -104,7 +104,7 @@ function EditProduct() {
     
     files.forEach((file) => {
       if (!file.type.startsWith("image/")) {
-        setError("Only image files are supported");
+        showToast("Only image files are supported", "error");
         return;
       }
 
@@ -122,17 +122,15 @@ function EditProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     if (!name.trim() || !price || !images.length || !description.trim() || !category) {
-      setError("Please fill in all required fields and upload at least one image.");
+      showToast("Please fill in all required fields and upload at least one image.", "error");
       return;
     }
 
     const numericPrice = Number(price);
     if (isNaN(numericPrice) || numericPrice <= 0) {
-      setError("Please enter a valid price greater than zero.");
+      showToast("Please enter a valid price greater than zero.", "error");
       return;
     }
 
@@ -159,17 +157,17 @@ function EditProduct() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Product updated successfully!");
+        showToast("Product updated successfully!", "success");
         setTimeout(() => {
           navigate(`/product/${id}`);
         }, 1200);
       } else {
-        setError(data.message || "Failed to update product");
+        showToast(data.message || "Failed to update product", "error");
         setIsSubmitting(false);
       }
     } catch (err) {
       console.error(err);
-      setError("Network error, please try again.");
+      showToast("Network error, please try again.", "error");
       setIsSubmitting(false);
     }
   };
@@ -191,25 +189,6 @@ function EditProduct() {
               <p className="dashboard-subtitle">Modify specifications or manage image catalog for this jewelry piece</p>
             </div>
           </div>
-
-          {success && (
-            <div className="alert alert-success animate-pulse">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{success}</span>
-            </div>
-          )}
-
-          {error && (
-            <div className="alert alert-error animate-shake">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{error}</span>
-            </div>
-          )}
-
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             <div className="form-grid">
               <div className="form-group">

@@ -1,11 +1,13 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import "./AddProduct.css";
 
 function AddProduct() {
   const { user, loading } = useContext(AuthContext);
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -14,8 +16,6 @@ function AddProduct() {
   const [weight, setWeight] = useState("");
   const [images, setImages] = useState([]);
   const [description, setDescription] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // If AuthContext is loading user info
@@ -66,7 +66,7 @@ function AddProduct() {
     files.forEach((file) => {
       // Basic check for image size/type
       if (!file.type.startsWith("image/")) {
-        setError("Only image files are supported");
+        showToast("Only image files are supported", "error");
         return;
       }
 
@@ -75,7 +75,7 @@ function AddProduct() {
         setImages((prev) => [...prev, reader.result]);
       };
       reader.onerror = () => {
-        setError("Failed to read image file");
+        showToast("Failed to read image file", "error");
       };
       reader.readAsDataURL(file);
     });
@@ -87,17 +87,15 @@ function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     if (!name.trim() || !price || !images.length || !description.trim() || !category) {
-      setError("Please fill in all required fields and upload at least one image.");
+      showToast("Please fill in all required fields and upload at least one image.", "error");
       return;
     }
 
     const numericPrice = Number(price);
     if (isNaN(numericPrice) || numericPrice <= 0) {
-      setError("Please enter a valid price greater than zero.");
+      showToast("Please enter a valid price greater than zero.", "error");
       return;
     }
 
@@ -124,17 +122,17 @@ function AddProduct() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Product created successfully!");
+        showToast("Product created successfully!", "success");
         setTimeout(() => {
           navigate("/");
         }, 1200);
       } else {
-        setError(data.message || "Failed to create product");
+        showToast(data.message || "Failed to create product", "error");
         setIsSubmitting(false);
       }
     } catch (err) {
       console.error(err);
-      setError("Network error, please try again.");
+      showToast("Network error, please try again.", "error");
       setIsSubmitting(false);
     }
   };
@@ -156,25 +154,6 @@ function AddProduct() {
               <p className="dashboard-subtitle">Publish a new jewelry item to the storefront collection (Multiple images allowed)</p>
             </div>
           </div>
-
-          {success && (
-            <div className="alert alert-success animate-pulse">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{success}</span>
-            </div>
-          )}
-
-          {error && (
-            <div className="alert alert-error animate-shake">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{error}</span>
-            </div>
-          )}
-
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             <div className="form-grid">
               <div className="form-group">

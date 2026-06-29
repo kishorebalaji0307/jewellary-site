@@ -10,6 +10,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import AdminOrders from "./Pages/AdminOrders";
 import Booking from "./Pages/Booking";
 import AdminBookings from "./Pages/AdminBookings";
+import About from "./Pages/About";
 
 // Guard Component to check if user is logged in and is the Admin
 const AdminRoute = ({ children }) => {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/add-product"
           element={

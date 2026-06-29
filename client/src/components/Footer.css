@@ -1,55 +1,182 @@
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER — Luxury Brand Footer
+   ═══════════════════════════════════════════════════════════════ */
+
 .footer {
   margin-top: auto;
-  background-color: var(--stone-800);
-  color: var(--stone-300);
-  padding: 2.5rem 1.5rem;
-  border-top: 1px solid var(--stone-700);
-  font-size: 0.75rem;
+  background: linear-gradient(180deg, var(--noir-900) 0%, var(--noir-950) 100%);
+  color: var(--noir-400);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.8125rem;
+}
+
+/* Subtle ambient glow */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 180px;
+  background: radial-gradient(ellipse at center, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Decorative Top Accent ──────────────────────────────── */
+
+.footer-top-accent {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 169, 110, 0.35) 30%, var(--gold-500) 50%, rgba(201, 169, 110, 0.35) 70%, transparent 100%);
+}
+
+/* ── Container ──────────────────────────────────────────── */
+
+.footer-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
-  .footer {
-    padding: 2.5rem 3rem;
+  .footer-container {
+    padding: 4.5rem 3rem 3.5rem;
   }
 }
 
-.footer-container {
-  max-width: 80rem; /* max-w-7xl */
-  margin: 0 auto;
+/* ── Brand Column ───────────────────────────────────────── */
+
+.footer-brand-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .footer-container {
-    flex-direction: row;
-  }
+  gap: 0.875rem;
+  text-align: center;
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .footer-logo {
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid var(--stone-600);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  box-shadow: 0 0 15px rgba(201, 169, 110, 0.15);
+  transition: var(--transition-luxury);
+}
+
+.footer-logo:hover {
+  box-shadow: 0 0 25px rgba(201, 169, 110, 0.3);
+  transform: scale(1.05) rotate(5deg);
 }
 
 .footer-brand-name {
-  color: var(--stone-100);
+  color: var(--cream);
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.footer-tagline {
+  color: var(--noir-400);
+  font-size: 0.8125rem;
+  max-width: 30rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* ── Decorative Divider ─────────────────────────────────── */
+
+.footer-divider {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0.5rem 0;
+}
+
+.footer-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3) 50%, transparent);
+}
+
+.footer-divider-ornament {
+  color: var(--gold-400);
+  font-size: 0.625rem;
+  padding: 0 1rem;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 5px rgba(201,169,110,0.4));
+}
+
+/* ── Bottom Row ─────────────────────────────────────────── */
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .footer-copyright {
-  color: var(--stone-300);
+  color: var(--noir-500);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+/* ── Social Icons ───────────────────────────────────────── */
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-social-link {
+  width: 2.375rem;
+  height: 2.375rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--noir-300);
+  border: 1px solid rgba(201, 169, 110, 0.18);
+  background: rgba(201, 169, 110, 0.03);
+  transition: var(--transition-luxury);
+}
+
+.footer-social-link svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.footer-social-link:hover {
+  color: var(--gold-300);
+  border-color: rgba(201, 169, 110, 0.5);
+  background: rgba(201, 169, 110, 0.12);
+  box-shadow: 
+    0 0 20px rgba(201, 169, 110, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
 }

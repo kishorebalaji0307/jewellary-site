@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import "./Register.css";
 
 function Register() {
@@ -8,11 +9,10 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { register, user } = useContext(AuthContext);
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   // If user is already logged in, redirect to Home page
@@ -24,22 +24,20 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     // Input validations
     if (!name.trim() || !email.trim() || !password.trim()) {
-      setError("Please fill in all fields.");
+      showToast("Please fill in all fields.", "error");
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
+      showToast("Password must be at least 6 characters long.", "error");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      showToast("Passwords do not match.", "error");
       return;
     }
 
@@ -49,16 +47,16 @@ function Register() {
       const result = await register(name, email, password);
 
       if (result.success) {
-        setSuccess("Registration successful! Creating your session...");
+        showToast("Registration successful! Creating your session...", "success");
         setTimeout(() => {
           navigate("/");
         }, 1200);
       } else {
-        setError(result.message);
+        showToast(result.message || "Registration failed", "error");
         setIsSubmitting(false);
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      showToast("An unexpected error occurred. Please try again.", "error");
       setIsSubmitting(false);
     }
   };
@@ -82,45 +80,6 @@ function Register() {
             Join us for an exclusive, custom luxury experience
           </p>
         </div>
-
-        {/* Success Alert */}
-        {success && (
-          <div className="alert alert-success animate-pulse">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span className="alert-text">{success}</span>
-          </div>
-        )}
-
-        {/* Error Alert */}
-        {error && (
-          <div className="alert alert-error animate-shake">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span className="alert-text">{error}</span>
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label className="form-label">

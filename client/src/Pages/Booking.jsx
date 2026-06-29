@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Booking.css";
 
 function Booking() {
   const { user } = useContext(AuthContext);
+  const { showToast } = useToast();
 
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -15,8 +17,6 @@ function Booking() {
   const [notes, setNotes] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   // Prefill details if user is logged in
   useEffect(() => {
@@ -27,19 +27,17 @@ function Booking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     // Required fields check
     if (!customerName.trim() || !customerPhone.trim() || !location.trim() || !serviceCategory) {
-      setError("Please fill in all required fields.");
+      showToast("Please fill in all required fields.", "error");
       return;
     }
 
     // Phone validation
     const phoneRegex = /^\+?[\d\s\-()]{10,}$/;
     if (!phoneRegex.test(customerPhone)) {
-      setError("Please enter a valid phone number (minimum 10 digits).");
+      showToast("Please enter a valid phone number (minimum 10 digits).", "error");
       return;
     }
 
@@ -64,7 +62,7 @@ function Booking() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Home visit booking request submitted successfully! We will contact you soon.");
+        showToast("Home visit booking request submitted successfully! We will contact you soon.", "success");
         // Reset form fields
         setCustomerPhone("");
         setLocation("");
@@ -72,11 +70,11 @@ function Booking() {
         setPreferredDate("");
         setNotes("");
       } else {
-        setError(data.message || "Failed to submit booking request.");
+        showToast(data.message || "Failed to submit booking request.", "error");
       }
     } catch (err) {
       console.error(err);
-      setError("Network error. Please check if the server is running and try again.");
+      showToast("Network error. Please check if the server is running and try again.", "error");
     } finally {
       setSubmitting(false);
     }
@@ -96,25 +94,6 @@ function Booking() {
               Our expert team will visit your location based on your selected service category.
             </p>
           </div>
-
-          {success && (
-            <div className="alert alert-success">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="alert-icon animate-pulse">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{success}</span>
-            </div>
-          )}
-
-          {error && (
-            <div className="alert alert-error">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="alert-icon animate-shake">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{error}</span>
-            </div>
-          )}
-
           <form onSubmit={handleSubmit} className="booking-form">
             <div className="form-grid">
               <div className="form-group">

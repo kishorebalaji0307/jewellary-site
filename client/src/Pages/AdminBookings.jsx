@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import "./AdminBookings.css";
 
 function AdminBookings() {
   const { user, loading: authLoading } = useContext(AuthContext);
+  const { showToast } = useToast();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -68,12 +70,13 @@ function AdminBookings() {
         setBookings((prevBookings) =>
           prevBookings.map((b) => (b._id === id ? { ...b, status: newStatus } : b))
         );
+        showToast("Booking status updated successfully.", "success");
       } else {
-        alert(data.message || "Failed to update booking status.");
+        showToast(data.message || "Failed to update booking status.", "error");
       }
     } catch (err) {
       console.error(err);
-      alert("Network error occurred while updating booking status.");
+      showToast("Network error occurred while updating booking status.", "error");
     } finally {
       setUpdatingId(null);
     }

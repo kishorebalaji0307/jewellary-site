@@ -53,10 +53,15 @@ const createProduct = async (req, res) => {
       if (img.startsWith("http")) {
         uploadedImages.push(img);
       } else {
-        const uploadRes = await cloudinary.uploader.upload(img, {
-          folder: "products",
-        });
-        uploadedImages.push(uploadRes.secure_url);
+        try {
+          const uploadRes = await cloudinary.uploader.upload(img, {
+            folder: "products",
+          });
+          uploadedImages.push(uploadRes.secure_url);
+        } catch (uploadErr) {
+          console.warn("Cloudinary upload failed, falling back to direct base64 storage:", uploadErr.message);
+          uploadedImages.push(img);
+        }
       }
     }
 
@@ -107,10 +112,15 @@ const updateProduct = async (req, res) => {
         if (img.startsWith("http")) {
           uploadedImages.push(img);
         } else {
-          const uploadRes = await cloudinary.uploader.upload(img, {
-            folder: "products",
-          });
-          uploadedImages.push(uploadRes.secure_url);
+          try {
+            const uploadRes = await cloudinary.uploader.upload(img, {
+              folder: "products",
+            });
+            uploadedImages.push(uploadRes.secure_url);
+          } catch (uploadErr) {
+            console.warn("Cloudinary upload failed during update, falling back to direct base64 storage:", uploadErr.message);
+            uploadedImages.push(img);
+          }
         }
       }
       product.images = uploadedImages;

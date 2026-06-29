@@ -1,16 +1,16 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login, googleLogin, user } = useContext(AuthContext);
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   // Redirect if logged in
@@ -40,35 +40,31 @@ function Login() {
   }, []);
 
   const handleGoogleResponse = async (response) => {
-    setError("");
-    setSuccess("");
     setIsSubmitting(true);
     
     try {
       const result = await googleLogin(response.credential);
       if (result.success) {
-        setSuccess("Login successful! Redirecting...");
+        showToast("Login successful! Redirecting...", "success");
         setTimeout(() => {
           navigate("/");
         }, 1200);
       } else {
-        setError(result.message);
+        showToast(result.message || "Google sign-in failed", "error");
         setIsSubmitting(false);
       }
     } catch (err) {
       console.error(err);
-      setError("Google Login failed. Please try again.");
+      showToast("Google Login failed. Please try again.", "error");
       setIsSubmitting(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     if (!email.trim() || !password.trim()) {
-      setError("Please fill in all fields.");
+      showToast("Please fill in all fields.", "error");
       return;
     }
 
@@ -78,16 +74,16 @@ function Login() {
       const result = await login(email, password);
 
       if (result.success) {
-        setSuccess("Login successful! Redirecting...");
+        showToast("Login successful! Redirecting...", "success");
         setTimeout(() => {
           navigate("/");
         }, 1200);
       } else {
-        setError(result.message || "Invalid credentials");
+        showToast(result.message || "Invalid credentials", "error");
         setIsSubmitting(false);
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      showToast("An unexpected error occurred. Please try again.", "error");
       setIsSubmitting(false);
     }
   };
@@ -109,45 +105,6 @@ function Login() {
             Access your custom luxury dashboard
           </p>
         </div>
-
-        {/* Success Alert */}
-        {success && (
-          <div className="alert alert-success animate-pulse">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span className="alert-text">{success}</span>
-          </div>
-        )}
-
-        {/* Error Alert */}
-        {error && (
-          <div className="alert alert-error animate-shake">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span className="alert-text">{error}</span>
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label className="form-label">
