@@ -17,13 +17,6 @@ function AdminOrders() {
   // Available categories list
   const categories = ["Rings", "Necklaces", "Bangles", "Earrings", "Bracelets", "Custom Jewelry"];
 
-  useEffect(() => {
-    // Only fetch orders if user is authenticated and is the admin
-    if (user && user.email === "admin@kavithasilver.com") {
-      fetchOrders();
-    }
-  }, [user]);
-
   const fetchOrders = async () => {
     setLoading(true);
     setError("");
@@ -50,6 +43,13 @@ function AdminOrders() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // Only fetch orders if user is authenticated and is the admin
+    if (user && user.email === "admin@kavithasilver.com") {
+      fetchOrders();
+    }
+  }, [user]);
 
   // Perform search & category filtering in memory for instant reactivity and scalability
   const filteredOrders = useMemo(() => {

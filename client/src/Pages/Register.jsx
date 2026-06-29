@@ -56,6 +56,7 @@ function Register() {
         setIsSubmitting(false);
       }
     } catch (err) {
+      console.error("Registration error:", err);
       showToast("An unexpected error occurred. Please try again.", "error");
       setIsSubmitting(false);
     }

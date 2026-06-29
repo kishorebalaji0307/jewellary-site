@@ -19,26 +19,6 @@ function Login() {
       navigate("/");
     }
   }, [user, navigate]);
-
-  // Google Login Initialization
-  useEffect(() => {
-    const initGoogle = () => {
-      if (window.google) {
-        window.google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || "304246253516-4gepg2ltqdhjsmg4qlh9d19va8ft7vka.apps.googleusercontent.com",
-          callback: handleGoogleResponse,
-        });
-        window.google.accounts.id.renderButton(
-          document.getElementById("google-signin-btn"),
-          { theme: "outline", size: "large", width: "384", shape: "rectangular" }
-        );
-      } else {
-        setTimeout(initGoogle, 200); // Poll until script loaded
-      }
-    };
-    initGoogle();
-  }, []);
-
   const handleGoogleResponse = async (response) => {
     setIsSubmitting(true);
     
@@ -60,6 +40,24 @@ function Login() {
     }
   };
 
+  // Google Login Initialization
+  useEffect(() => {
+    const initGoogle = () => {
+      if (window.google) {
+        window.google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || "304246253516-4gepg2ltqdhjsmg4qlh9d19va8ft7vka.apps.googleusercontent.com",
+          callback: handleGoogleResponse,
+        });
+        window.google.accounts.id.renderButton(
+          document.getElementById("google-signin-btn"),
+          { theme: "outline", size: "large", width: "384", shape: "rectangular" }
+        );
+      } else {
+        setTimeout(initGoogle, 200); // Poll until script loaded
+      }
+    };
+    initGoogle();
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -83,6 +81,7 @@ function Login() {
         setIsSubmitting(false);
       }
     } catch (err) {
+      console.error("Login error:", err);
       showToast("An unexpected error occurred. Please try again.", "error");
       setIsSubmitting(false);
     }

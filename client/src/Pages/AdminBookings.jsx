@@ -18,12 +18,6 @@ function AdminBookings() {
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
 
-  useEffect(() => {
-    if (user && user.email === "admin@kavithasilver.com") {
-      fetchBookings();
-    }
-  }, [user]);
-
   const fetchBookings = async () => {
     setLoading(true);
     setError("");
@@ -50,6 +44,12 @@ function AdminBookings() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user && user.email === "admin@kavithasilver.com") {
+      fetchBookings();
+    }
+  }, [user]);
 
   const handleUpdateStatus = async (id, newStatus) => {
     setUpdatingId(id);
