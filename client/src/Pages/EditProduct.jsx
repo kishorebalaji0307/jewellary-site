@@ -33,7 +33,7 @@ function EditProduct() {
 
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/products/${id}`);
         const data = await res.json();
         
         if (res.ok) {
@@ -138,7 +138,7 @@ function EditProduct() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/products/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

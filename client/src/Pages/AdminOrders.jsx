@@ -29,7 +29,7 @@ function AdminOrders() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/orders`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
