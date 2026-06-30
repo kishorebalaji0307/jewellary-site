@@ -1,3 +1,10 @@
+const dns = require("dns");
+
+// Force Node.js to prefer IPv4 DNS resolution over IPv6 to prevent ENETUNREACH errors
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder("ipv4first");
+}
+
 const nodemailer = require("nodemailer");
 const { customerEmailStyles, adminEmailStyles } = require("./emailStyles");
 
