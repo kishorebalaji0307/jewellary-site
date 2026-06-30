@@ -1640,3 +1640,52 @@
   color: var(--noir-500);
   line-height: 1.65;
 }
+
+/* ── Mobile Responsiveness ─────────────────────────────── */
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.35rem;
+  }
+  .hero-description {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .hero-stats {
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+  }
+  .hero-stat-number {
+    font-size: 1.5rem;
+  }
+  .hero-stat-label {
+    font-size: 0.625rem;
+  }
+  .services-section {
+    padding: 4rem 1rem;
+  }
+  .services-title {
+    font-size: 1.85rem;
+  }
+  .catalog-section {
+    padding: 4rem 1rem;
+  }
+  .catalog-title {
+    font-size: 1.85rem;
+  }
+  .showcase-section {
+    padding: 4rem 1rem;
+  }
+  .showcase-title {
+    font-size: 1.85rem;
+  }
+  .values-section {
+    padding: 4rem 1rem;
+  }
+  .values-title {
+    font-size: 1.85rem;
+  }
+  .value-item {
+    padding: 1.5rem 1.25rem;
+  }
+}

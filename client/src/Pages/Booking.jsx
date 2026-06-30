@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { API_BASE_URL } from "../config";
 import "./Booking.css";
 
 function Booking() {
@@ -44,7 +45,7 @@ function Booking() {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bookings`, {
+      const res = await fetch(`${API_BASE_URL}/api/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

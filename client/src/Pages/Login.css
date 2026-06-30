@@ -321,3 +321,18 @@
   color: var(--gold-600);
   text-decoration-color: var(--gold-400);
 }
+
+/* ── Mobile Responsiveness ─────────────────────────────── */
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 1.5rem 1rem;
+  }
+  .auth-card {
+    padding: 2.25rem 1.5rem;
+    border-radius: 1.5rem;
+  }
+  .auth-title {
+    font-size: 1.75rem;
+  }
+}

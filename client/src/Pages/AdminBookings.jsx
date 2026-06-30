@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
+import { API_BASE_URL } from "../config";
 import "./AdminBookings.css";
 
 function AdminBookings() {
@@ -23,7 +24,7 @@ function AdminBookings() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bookings`, {
+      const res = await fetch(`${API_BASE_URL}/api/bookings`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -55,7 +56,7 @@ function AdminBookings() {
     setUpdatingId(id);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bookings/${id}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/bookings/${id}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

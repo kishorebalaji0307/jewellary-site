@@ -2,6 +2,7 @@ import { useState, useEffect, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import { API_BASE_URL } from "../config";
 import "./AdminOrders.css";
 
 function AdminOrders() {
@@ -22,7 +23,7 @@ function AdminOrders() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/orders`, {
+      const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

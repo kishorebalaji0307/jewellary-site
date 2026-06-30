@@ -642,3 +642,45 @@
   border-top: 1px solid rgba(201, 169, 110, 0.12);
   padding-top: 1.5rem;
 }
+
+/* ── Mobile Responsiveness ─────────────────────────────── */
+
+@media (max-width: 640px) {
+  .details-container {
+    padding: 1.5rem 1rem;
+  }
+  .breadcrumb {
+    margin-bottom: 1.5rem;
+  }
+  .details-card {
+    padding: 1.5rem 1.25rem;
+    gap: 2rem;
+    border-radius: 1.25rem;
+  }
+  .details-card::after {
+    border-radius: 1.25rem;
+  }
+  .thumbnail-btn {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 0.75rem;
+  }
+  .details-title {
+    font-size: 1.85rem;
+  }
+  .details-price {
+    font-size: 1.65rem;
+  }
+  .details-desc-box {
+    padding: 1.5rem 0;
+  }
+  .modal-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .modal-form-actions button {
+    width: 100%;
+    margin: 0 !important;
+  }
+}

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
+import { API_BASE_URL } from "../config";
 import "./AddProduct.css";
 
 function AddProduct() {
@@ -103,7 +104,7 @@ function AddProduct() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/products`, {
+      const res = await fetch(`${API_BASE_URL}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

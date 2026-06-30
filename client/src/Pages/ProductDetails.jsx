@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import Navbar from "../components/Navbar";
+import { API_BASE_URL } from "../config";
 import "./ProductDetails.css";
 
 function ProductDetails() {
@@ -56,7 +57,7 @@ function ProductDetails() {
     setModalSubmitting(true);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/orders`, {
+      const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +92,7 @@ function ProductDetails() {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/products/${id}`);
+        const res = await fetch(`${API_BASE_URL}/api/products/${id}`);
         const data = await res.json();
         
         if (res.ok) {
@@ -113,7 +114,7 @@ function ProductDetails() {
     setIsDeleting(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/products/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
