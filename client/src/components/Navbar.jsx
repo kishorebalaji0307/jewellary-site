@@ -42,6 +42,9 @@ function Navbar() {
         <Link to="/" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
           Home
         </Link>
+        <Link to="/products" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
+          Collection
+        </Link>
         <Link to="/booking" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
           Booking
         </Link>
@@ -74,7 +77,7 @@ function Navbar() {
 
         {user ? (
           <div className="navbar-user-section">
-            <div className="navbar-user-profile">
+            <Link to="/dashboard" className="navbar-user-profile" onClick={() => setIsMenuOpen(false)} title="View Account Dashboard">
               {/* User Avatar Circle */}
               <div className="navbar-avatar">
                 {user.name.charAt(0)}
@@ -82,7 +85,7 @@ function Navbar() {
               <span className="navbar-hello-user">
                 Hello, <strong>{user.name}</strong>
               </span>
-            </div>
+            </Link>
 
             <button
               onClick={() => {

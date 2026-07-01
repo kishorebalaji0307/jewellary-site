@@ -70,8 +70,22 @@ const getOrders = async (req, res) => {
   }
 };
 
+// @desc    Get logged-in user's own orders
+// @route   GET /api/orders/my-orders
+// @access  Private
+const getMyOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ customerEmail: req.user.email }).sort({ createdAt: -1 });
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("GetMyOrders Error:", error.message);
+    res.status(500).json({ message: "Server error occurred while fetching user orders" });
+  }
+};
+
 module.exports = {
   createOrder,
   getOrders,
+  getMyOrders,
 };
 

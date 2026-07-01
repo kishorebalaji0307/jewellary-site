@@ -306,8 +306,9 @@ function Home() {
               <p className="catalog-empty-desc">Our artisans are busy crafting new premium designs. Please check back soon or contact us for custom orders.</p>
             </div>
           ) : (
-            <div className="catalog-grid">
-              {products.map((product) => (
+            <>
+              <div className="catalog-grid">
+                {products.slice(0, 4).map((product) => (
                 <div key={product._id} className="product-card gradient-border-card scroll-reveal">
                   
                   <div className="product-image-container">
@@ -375,6 +376,14 @@ function Home() {
                 </div>
               ))}
             </div>
+            {products.length > 4 && (
+              <div className="catalog-actions scroll-reveal" style={{ textAlign: "center", marginTop: "40px" }}>
+                <Link to="/products" className="catalog-view-all-btn">
+                  View All Products
+                </Link>
+              </div>
+            )}
+            </>
           )}
         </div>
       </section>

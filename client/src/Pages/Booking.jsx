@@ -52,6 +52,7 @@ function Booking() {
         },
         body: JSON.stringify({
           customerName,
+          customerEmail: user ? user.email : undefined,
           customerPhone,
           location,
           serviceCategory,

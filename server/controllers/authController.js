@@ -174,9 +174,72 @@ const googleLogin = async (req, res) => {
   }
 };
 
+// @desc    Update user profile (name, email, password)
+// @route   PUT /api/auth/profile
+// @access  Private
+const updateProfile = async (req, res) => {
+  try {
+    const { name, email, password, currentPassword } = req.body;
+
+    if (!currentPassword) {
+      return res.status(400).json({ message: "Current password is required to save changes" });
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Incorrect current password" });
+    }
+
+    // Update name
+    if (name) {
+      user.name = name;
+    }
+
+    // Update email
+    if (email && email !== user.email) {
+      const emailExists = await User.findOne({ email });
+      if (emailExists) {
+        return res.status(400).json({ message: "Email is already in use" });
+      }
+      user.email = email;
+    }
+
+    // Update password
+    if (password) {
+      if (password.length < 6) {
+        return res.status(400).json({ message: "New password must be at least 6 characters long" });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      token: generateToken(updatedUser._id),
+      user: {
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      },
+    });
+  } catch (error) {
+    console.error("UpdateProfile Error:", error.message);
+    res.status(500).json({ message: "Server error occurred while updating profile" });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
   googleLogin,
+  updateProfile,
 };

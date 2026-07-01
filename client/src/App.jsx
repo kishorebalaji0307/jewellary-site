@@ -11,6 +11,27 @@ import AdminOrders from "./Pages/AdminOrders";
 import Booking from "./Pages/Booking";
 import AdminBookings from "./Pages/AdminBookings";
 import About from "./Pages/About";
+import Catalog from "./Pages/Catalog";
+import Dashboard from "./Pages/Dashboard";
+
+// Guard Component for authenticated users
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <div className="spinner-wrapper">
+        <div className="spinner-icon animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
 
 // Guard Component to check if user is logged in and is the Admin
 const AdminRoute = ({ children }) => {
@@ -42,6 +63,15 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Catalog />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/add-product"
           element={

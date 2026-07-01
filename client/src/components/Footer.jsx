@@ -22,6 +22,14 @@ function Footer() {
           <p className="footer-tagline">
             Crafting timeless elegance since 2005. Premium handcrafted silver & custom gold jewellery.
           </p>
+          <div className="footer-contact">
+            <p className="footer-contact-item">
+              <span className="footer-contact-label">Call:</span> 9791768267 / 9894483893
+            </p>
+            <p className="footer-contact-item">
+              <span className="footer-contact-label">Email:</span> <a href="mailto:kavithasilverjewellery@gmail.com" className="footer-contact-link">kavithasilverjewellery@gmail.com</a>
+            </p>
+          </div>
         </div>
 
         {/* Divider */}

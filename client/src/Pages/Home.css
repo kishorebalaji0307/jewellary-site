@@ -1689,3 +1689,35 @@
     padding: 1.5rem 1.25rem;
   }
 }
+
+.catalog-view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #c9a96e;
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  padding: 0.9rem 2.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.catalog-view-all-btn:hover {
+  background: #c9a96e;
+  color: #ffffff;
+  border-color: #c9a96e;
+  box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+  transform: translateY(-2px);
+}
+
+.catalog-view-all-btn:active {
+  transform: translateY(0);
+}
+

@@ -180,3 +180,36 @@
     0 4px 10px rgba(0, 0, 0, 0.3);
   transform: translateY(-3px);
 }
+
+/* Footer Contact Section */
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.footer-contact-item {
+  margin: 0;
+  color: var(--noir-300);
+  font-size: 0.8125rem;
+}
+
+.footer-contact-label {
+  color: var(--gold-400);
+  font-weight: 600;
+  margin-right: 0.35rem;
+}
+
+.footer-contact-link {
+  color: var(--noir-300);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact-link:hover {
+  color: var(--gold-300);
+  text-decoration: underline;
+}
+

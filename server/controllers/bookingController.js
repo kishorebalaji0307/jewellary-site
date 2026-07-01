@@ -6,7 +6,7 @@ const { sendBookingEmail } = require("../config/nodemailer");
 // @access  Public
 const createBooking = async (req, res) => {
   try {
-    const { customerName, customerPhone, location, serviceCategory, preferredDate, notes } = req.body;
+    const { customerName, customerEmail, customerPhone, location, serviceCategory, preferredDate, notes } = req.body;
 
     // Validation
     if (!customerName || !customerPhone || !location || !serviceCategory) {
@@ -27,6 +27,7 @@ const createBooking = async (req, res) => {
 
     const booking = await Booking.create({
       customerName,
+      customerEmail,
       customerPhone,
       location,
       serviceCategory,
@@ -86,8 +87,22 @@ const updateBookingStatus = async (req, res) => {
   }
 };
 
+// @desc    Get logged-in user's own bookings
+// @route   GET /api/bookings/my-bookings
+// @access  Private
+const getMyBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({ customerEmail: req.user.email }).sort({ createdAt: -1 });
+    res.status(200).json(bookings);
+  } catch (error) {
+    console.error("GetMyBookings Error:", error.message);
+    res.status(500).json({ message: "Server error occurred while fetching user bookings" });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookings,
   updateBookingStatus,
+  getMyBookings,
 };
