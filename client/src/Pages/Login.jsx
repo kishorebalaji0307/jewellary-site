@@ -94,11 +94,11 @@ function Login() {
         <div className="auth-header">
           <img
             src="/logo.jpg"
-            alt="Kavitha Silver Jewellery Logo"
+            alt="Kavitha Silver Jewellers Logo"
             className="auth-logo"
           />
           <h1 className="auth-title">
-            Kavitha Jewellery
+            Kavitha Silver Jewellers
           </h1>
           <p className="auth-subtitle">
             Access your custom luxury dashboard

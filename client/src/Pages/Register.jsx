@@ -68,14 +68,14 @@ function Register() {
         <div className="auth-header">
           <img
             src="/logo.jpg"
-            alt="Kavitha Silver Jewellery Logo"
+            alt="Kavitha Silver Jewellers Logo"
             className="auth-logo"
           />
           <span className="auth-badge">
             Create Membership
           </span>
           <h1 className="auth-title">
-            Jewellery Shop
+            Kavitha Silver Jewellers
           </h1>
           <p className="auth-subtitle">
             Join us for an exclusive, custom luxury experience

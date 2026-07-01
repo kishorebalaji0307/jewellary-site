@@ -18,11 +18,11 @@ function Navbar() {
         <Link to="/" className="navbar-brand-link" onClick={() => setIsMenuOpen(false)}>
           <img
             src="/logo.jpg"
-            alt="Kavitha Silver Jewellery Logo"
+            alt="Kavitha Silver Jewellers Logo"
             className="navbar-logo"
           />
           <h1 className="navbar-title">
-            Kavitha Jewellary<span>.</span>
+            Kavitha Silver Jewellers<span>.</span>
           </h1>
         </Link>
       </div>

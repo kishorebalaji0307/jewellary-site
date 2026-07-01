@@ -50,7 +50,7 @@ const getCustomerEmailTemplate = (order) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>KAVITHA SILVER JEWELLERY</h1>
+          <h1>KAVITHA SILVER JEWELLERS</h1>
         </div>
         <div class="content">
           <div class="greeting">Dear <span class="highlight-text">${customerName}</span>,</div>
@@ -66,10 +66,10 @@ const getCustomerEmailTemplate = (order) => {
           
           <p>If you have any questions or would like to add special instructions to your order request, please feel free to reply directly to this email or reach out to us at our support line.</p>
           
-          <p style="margin-top: 30px;">Warm regards,<br><span class="highlight-text">Kavitha Silver Jewellery Team</span></p>
+          <p style="margin-top: 30px;">Warm regards,<br><span class="highlight-text">Kavitha Silver Jewellers Team</span></p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Kavitha Silver Jewellery. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Kavitha Silver Jewellers. All rights reserved.</p>
           <p>This is an automated confirmation of your request.</p>
         </div>
       </div>
@@ -102,7 +102,7 @@ const getAdminEmailTemplate = (order) => {
           <h1>🚨 New Order Request Received</h1>
         </div>
         <div class="content">
-          <p>A new purchase inquiry has been submitted by a customer on the Jewellery store. Please see the details below:</p>
+          <p>A new purchase inquiry has been submitted by a customer on the Silver Jewellers store. Please see the details below:</p>
           
           <div class="section-title">Customer Contact Details</div>
           <table class="details-table">
@@ -135,7 +135,7 @@ const getAdminEmailTemplate = (order) => {
           </div>
         </div>
         <div class="footer">
-          <p>This is an automated system notification from your Jewellery Website backend.</p>
+          <p>This is an automated system notification from your Silver Jewellers Website backend.</p>
         </div>
       </div>
     </body>
@@ -151,14 +151,14 @@ const sendOrderEmails = async (order) => {
   const adminEmail = process.env.EMAIL_USER; // Sent to admin email (self-notification)
 
   const mailToCustomerOptions = {
-    from: `"Kavitha Silver Jewellery" <${process.env.EMAIL_USER}>`,
+    from: `"Kavitha Silver Jewellers" <${process.env.EMAIL_USER}>`,
     to: order.customerEmail,
-    subject: "Order Request Received - Kavitha Silver Jewellery",
+    subject: "Order Request Received - Kavitha Silver Jewellers",
     html: getCustomerEmailTemplate(order),
   };
 
   const mailToAdminOptions = {
-    from: `"Jewellery Store Notification" <${process.env.EMAIL_USER}>`,
+    from: `"Silver Jewellers Store Notification" <${process.env.EMAIL_USER}>`,
     to: adminEmail,
     subject: `🚨 New Order Request from ${order.customerName}`,
     html: getAdminEmailTemplate(order),
@@ -239,7 +239,7 @@ const getBookingEmailTemplate = (booking) => {
           </table>
         </div>
         <div class="footer">
-          <p>This is an automated system notification from your Jewellery Website backend.</p>
+          <p>This is an automated system notification from your Silver Jewellers Website backend.</p>
         </div>
       </div>
     </body>
@@ -255,7 +255,7 @@ const sendBookingEmail = async (booking) => {
   const adminEmail = process.env.EMAIL_USER;
 
   const mailOptions = {
-    from: `"Jewellery Booking" <${process.env.EMAIL_USER}>`,
+    from: `"Silver Jewellers Booking" <${process.env.EMAIL_USER}>`,
     to: adminEmail,
     subject: `📅 New Home Visit Booking (${booking.serviceCategory}) from ${booking.customerName}`,
     html: getBookingEmailTemplate(booking),

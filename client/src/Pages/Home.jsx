@@ -115,12 +115,12 @@ function Home() {
             <h1 className="hero-title">
               Kavitha <br />
               <span className="hero-title-accent">
-                Silver Jewellery
+                Silver Jewellers
               </span>
             </h1>
 
             <p className="hero-description">
-              Kavitha Silver Jewellery is your trusted partner for premium silver
+              Kavitha Silver Jewellers is your trusted partner for premium silver
               jewellery, custom gold orders, and expert jewellery repair services.
               We are committed to quality craftsmanship, trusted service, and
               complete customer satisfaction.
@@ -160,7 +160,7 @@ function Home() {
             <div className="hero-image-wrapper">
               <img
                 src="/jewellery_hero.png"
-                alt="Fine Jewellery Selection"
+                alt="Fine Silver Jewellers Selection"
                 className="hero-image"
               />
               {/* Premium reflection overlay */}
@@ -459,8 +459,8 @@ function Home() {
           </h2>
           <div className="section-ornament-line scroll-reveal" />
           <p className="values-desc scroll-reveal">
-            At Kavitha Silver Jewellery, every step of our process reflects our devotion to quality. 
-            From sourcing conflict-free precious metals to providing individual client attention, 
+            At Kavitha Silver Jewellers, every step of our process reflects our devotion to quality. 
+            From sourcing conflict-free precious metals to providing individual client attention,  
             we strive to create an experience as refined as the products we craft.
           </p>
           <div className="values-grid">

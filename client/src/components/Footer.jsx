@@ -12,11 +12,11 @@ function Footer() {
           <div className="footer-brand">
             <img
               src="/logo.jpg"
-              alt="Kavitha Silver Jewellery Logo"
+              alt="Kavitha Silver Jewellers Logo"
               className="footer-logo"
             />
             <span className="footer-brand-name">
-              Kavitha Silver Jewellery
+              Kavitha Silver Jewellers
             </span>
           </div>
           <p className="footer-tagline">
@@ -34,7 +34,7 @@ function Footer() {
         {/* Bottom Row */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © {new Date().getFullYear()} Kavitha Silver Jewellery. All rights reserved.
+            © {new Date().getFullYear()} Kavitha Silver Jewellers. All rights reserved.
           </p>
 
           {/* Social Icons */}
