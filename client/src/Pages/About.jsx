@@ -44,20 +44,7 @@ function About() {
               </div>
             </div>
 
-            <div className="about-image-section">
-              <div className="about-image-frame">
-                <div className="about-image-corner about-image-corner-tl" />
-                <div className="about-image-corner about-image-corner-tr" />
-                <div className="about-image-corner about-image-corner-bl" />
-                <div className="about-image-corner about-image-corner-br" />
-                <img
-                  src="/silver_showroom_bg.png"
-                  alt="Kavitha Silver Jewellers Showroom"
-                  className="about-side-img"
-                />
-                <div className="about-image-glow" />
-              </div>
-            </div>
+            {/* Image section removed as requested */}
           </div>
 
           <div className="ornamental-divider">

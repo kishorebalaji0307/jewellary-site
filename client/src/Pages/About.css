@@ -82,7 +82,7 @@
 .about-title {
   font-size: 2.35rem;
   font-weight: 750;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   color: var(--noir-900);
   margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
@@ -107,24 +107,20 @@
 /* ── Content Grid ───────────────────────────────────────── */
 
 .about-content-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 3rem;
-  align-items: start;
   position: relative;
   z-index: 2;
-}
-
-@media (min-width: 768px) {
-  .about-content-grid {
-    grid-template-columns: 1.2fr 0.8fr;
-  }
 }
 
 .about-text-section {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  max-width: 800px;
+  width: 100%;
 }
 
 .about-paragraph {
@@ -161,7 +157,7 @@
   top: 0.5rem;
   left: 1.25rem;
   font-size: 4rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   color: var(--gold-300);
   line-height: 1;
   opacity: 0.35;
@@ -292,7 +288,7 @@
   align-items: center;
   justify-content: center;
   color: var(--gold-300);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -330,7 +326,7 @@
   font-size: 1.5rem;
   font-weight: 750;
   color: var(--noir-900);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   letter-spacing: -0.01em;
 }
 
